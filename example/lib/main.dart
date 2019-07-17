@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-
   final String title;
 
   @override
@@ -40,25 +39,28 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(child: Text("Play"), onPressed: () async {
-              final player = GaplessAudioLoop();
-              await player.load('Loop-Menu.wav');
+            RaisedButton(
+                child: Text("Play"),
+                onPressed: () async {
+                  final player = GaplessAudioLoop();
+                  await player.load('Loop-Menu.wav');
 
-              await player.play();
+                  await player.play();
 
-              setState(() {
-                _player = player;
-              });
-            }),
-            RaisedButton(child: Text("Stop"), onPressed: () {
-              if (_player != null) {
-                _player.stop();
-              }
-            }),
+                  setState(() {
+                    _player = player;
+                  });
+                }),
+            RaisedButton(
+                child: Text("Stop"),
+                onPressed: () {
+                  if (_player != null) {
+                    _player.stop();
+                  }
+                }),
           ],
         ),
       ),
     );
   }
 }
-
