@@ -11,6 +11,7 @@ class GaplessAudioLoop {
 
   /// A reference to the loaded file.
   File _loadedFile;
+  int _id;
 
   Future<ByteData> _fetchAsset(String fileName) async {
     return await rootBundle.load('assets/$fileName');
@@ -37,6 +38,13 @@ class GaplessAudioLoop {
   Future<void> play() async {
     assert(_loadedFile != null, 'File is not loaded');
 
-    await _channel.invokeMethod("play", { 'url': _loadedFile.path });
+    _id = await _channel.invokeMethod("play", { 'url': _loadedFile.path });
+  }
+
+  Future<void> stop() async {
+    assert(_loadedFile != null, 'File is not loaded');
+    assert(_id != null, 'Loop is not playing');
+
+    await _channel.invokeMethod("stop", { 'playerId': _id });
   }
 }

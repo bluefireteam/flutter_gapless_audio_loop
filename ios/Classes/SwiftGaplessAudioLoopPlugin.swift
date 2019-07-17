@@ -36,9 +36,12 @@ public class SwiftGaplessAudioLoopPlugin: NSObject, FlutterPlugin {
                 
                 player.play()
                 
-                SwiftGaplessAudioLoopPlugin.players[SwiftGaplessAudioLoopPlugin.id] = Player(player: player, playerLooper: playerLooper)
+                let id = SwiftGaplessAudioLoopPlugin.id
+                SwiftGaplessAudioLoopPlugin.players[id] = Player(player: player, playerLooper: playerLooper)
 
                 SwiftGaplessAudioLoopPlugin.id = SwiftGaplessAudioLoopPlugin.id + 1
+                
+                result(id)
             }
         } else if (call.method == "stop") {
             guard let args = call.arguments else {
@@ -49,7 +52,8 @@ public class SwiftGaplessAudioLoopPlugin: NSObject, FlutterPlugin {
                 let playerId: Int = myArgs["playerId"] as? Int {
                 
                 let player = SwiftGaplessAudioLoopPlugin.players[playerId]
-                player?.player?
+                player?.player?.pause()
+                SwiftGaplessAudioLoopPlugin.players[playerId] = nil
             }
         }
     }

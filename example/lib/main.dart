@@ -30,6 +30,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  GaplessAudioLoop _player;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
               await player.play();
 
               setState(() {
+                _player = player;
               });
             }),
             RaisedButton(child: Text("Stop"), onPressed: () {
+              if (_player != null) {
+                _player.stop();
+              }
             }),
           ],
         ),
