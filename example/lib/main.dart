@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:gapless_audio_loop/gapless_audio_loop.dart';
 
 void main() => runApp(MyApp());
