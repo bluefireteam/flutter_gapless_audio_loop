@@ -6,9 +6,9 @@ Android may stills see some gaps on older versions like Android 6, newer version
 
 The Android solution is heavily inspired by this [article](https://medium.com/@viksaaskool/gappless-sound-loop-on-android-1ddeccc563de).
 
-At the moment this package is very simple and does not feature many media player functions, the focus on this package is to have a gapless loop, if you suggestions to improve this package, please file an issue or send a PR.
+At the moment this package is very simple and does not feature many media player functions, the focus on this package is to have a gapless loop, if you have suggestions to improve this package, please file an issue or send a PR.
 
-If you need a more full-feature audio player, I suggest you to take a look on the [audioplayers package](https://github.com/luanpotter/audioplayers).
+If you need a more full-featured audio player, I suggest that you take a look on the [audioplayers package](https://github.com/luanpotter/audioplayers).
 
 # Usage
 
@@ -37,6 +37,6 @@ To stop the loop just call `await player.stop()`
 
 These are some know reasons for audio files not looping perfect:
 
-- Android 6 does not seems to loop perfectly the files.
+- Android 6 does not seems to loop perfectly the files for some reason.
 - MP3 usually have gaps due to its compress format, for more info check [this question on stackexchange](https://sound.stackexchange.com/questions/8916/mp3-gapless-looping-help).
-- OGG files working only on Android, Unfortunately OGG is not support by iOs.
+- _OGG files working only on Android:_ Unfortunately OGG is not support by iOs.
