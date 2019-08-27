@@ -40,6 +40,19 @@ class GaplessAudioLoop {
     _id = await _channel.invokeMethod("play", {'url': _loadedFile.path});
   }
 
+  Future<void> pause() async {
+    assert(_id != null, 'Loop is not playing');
+
+    await _channel.invokeMethod("pause", {'playerId': _id});
+  }
+
+  Future<void> resume() async {
+    assert(_loadedFile != null, 'File is not loaded');
+    assert(_id != null, 'Loop is not playing');
+
+    await _channel.invokeMethod("resume", {'playerId': _id});
+  }
+
   Future<void> stop() async {
     assert(_loadedFile != null, 'File is not loaded');
     assert(_id != null, 'Loop is not playing');

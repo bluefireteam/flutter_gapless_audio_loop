@@ -43,7 +43,7 @@ public class SwiftGaplessAudioLoopPlugin: NSObject, FlutterPlugin {
                 
                 result(id)
             }
-        } else if (call.method == "stop") {
+        } else if (call.method == "stop" || call.method == "pause") {
             guard let args = call.arguments else {
                 return;
             }
@@ -53,7 +53,20 @@ public class SwiftGaplessAudioLoopPlugin: NSObject, FlutterPlugin {
                 
                 let player = SwiftGaplessAudioLoopPlugin.players[playerId]
                 player?.player?.pause()
-                SwiftGaplessAudioLoopPlugin.players[playerId] = nil
+                if (call.method == "stop") {
+                    SwiftGaplessAudioLoopPlugin.players[playerId] = nil
+                }
+            }
+        } else if (call.method == "resume") {
+            guard let args = call.arguments else {
+                return;
+            }
+            
+            if let myArgs = args as? [String: Any],
+                let playerId: Int = myArgs["playerId"] as? Int {
+                
+                let player = SwiftGaplessAudioLoopPlugin.players[playerId]
+                player?.player?.play()
             }
         }
     }

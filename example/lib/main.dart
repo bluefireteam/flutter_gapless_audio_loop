@@ -58,6 +58,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     _player.stop();
                   }
                 }),
+            RaisedButton(
+                child: Text("Pause"),
+                onPressed: () {
+                  if (_player != null) {
+                    _player.pause();
+                  }
+                }),
+            RaisedButton(
+                child: Text("Resume"),
+                onPressed: () {
+                  if (_player != null) {
+                    _player.resume();
+                  }
+                }),
           ],
         ),
       ),

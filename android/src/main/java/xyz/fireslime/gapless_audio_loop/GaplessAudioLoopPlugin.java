@@ -68,6 +68,14 @@ class GaplessPlayer {
     public void stop() {
         currentPlayer.stop();
     }
+
+    public void pause() {
+        currentPlayer.pause();
+    }
+
+    public void resume() {
+        currentPlayer.start();
+    }
 }
 
 /**
@@ -85,6 +93,10 @@ public class GaplessAudioLoopPlugin implements MethodCallHandler {
     private static int id = 0;
     private Map<Integer, GaplessPlayer> players = new HashMap<>();
 
+    GaplessPlayer getPlayer(MethodCall call) {
+        int playerId = call.argument("playerId");
+        return players.get(playerId);
+    }
     @Override
     public void onMethodCall(MethodCall call, Result result) {
         if (call.method.equals("play")) {
@@ -105,6 +117,19 @@ public class GaplessAudioLoopPlugin implements MethodCallHandler {
                 player.stop();
                 players.remove(playerId);
             }
+        } else if (call.method.equals("pause")) {
+            GaplessPlayer player = getPlayer(call);
+
+            if (player != null) {
+                player.pause();
+            }
+        } else if (call.method.equals("resume")) {
+            GaplessPlayer player = getPlayer(call);
+
+            if (player != null) {
+                player.resume();
+            }
+
         } else {
             result.notImplemented();
         }
