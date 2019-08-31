@@ -17,13 +17,16 @@ class GaplessPlayer {
     private MediaPlayer nextPlayer = null;
 
     private String url;
+    private double volume;
 
-    GaplessPlayer(String url) {
+    GaplessPlayer(String url, double volume) {
         this.url = url;
+        this.volume = volume;
 
         try {
             currentPlayer = new MediaPlayer();
             currentPlayer.setDataSource(url);
+            currentPlayer.setVolume((float) volume, (float) volume);
             currentPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
@@ -37,10 +40,21 @@ class GaplessPlayer {
         }
     }
 
+    public void setVolume(double volume) {
+        this.volume = volume;
+        if (currentPlayer != null) {
+            currentPlayer.setVolume((float) volume, (float) volume);
+        }
+        if (nextPlayer != null) {
+            nextPlayer.setVolume((float) volume, (float) volume);
+        }
+    }
+
     private void createNextMediaPlayer() {
         nextPlayer = new MediaPlayer();
         try {
             nextPlayer.setDataSource(url);
+            nextPlayer.setVolume((float) volume, (float) volume);
             nextPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
@@ -67,6 +81,9 @@ class GaplessPlayer {
 
     public void stop() {
         currentPlayer.stop();
+        if (nextPlayer != null) {
+            nextPlayer.stop();
+        }
     }
 
     public void pause() {
@@ -103,8 +120,10 @@ public class GaplessAudioLoopPlugin implements MethodCallHandler {
             int id = GaplessAudioLoopPlugin.id;
 
             String url = call.argument("url");
+            double volume = call.argument("volume");
 
-            players.put(id, new GaplessPlayer(url));
+            GaplessPlayer player = new GaplessPlayer(url, volume);
+            players.put(id, player);
 
             GaplessAudioLoopPlugin.id++;
 
@@ -129,7 +148,13 @@ public class GaplessAudioLoopPlugin implements MethodCallHandler {
             if (player != null) {
                 player.resume();
             }
+        } else if (call.method.equals("setVolume")) {
+            GaplessPlayer player = getPlayer(call);
+            double volume = call.argument("volume");
 
+            if (player != null) {
+                player.setVolume(volume);
+            }
         } else {
             result.notImplemented();
         }

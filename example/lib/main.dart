@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
                 child: Text("Play"),
                 onPressed: () async {
-                  final player = GaplessAudioLoop();
+                  final player = _player ?? GaplessAudioLoop();
                   await player.load('Loop-Menu.wav');
 
                   await player.play();
@@ -72,6 +72,32 @@ class _MyHomePageState extends State<MyHomePage> {
                     _player.resume();
                   }
                 }),
+            Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                        Text("Volume"),
+                        RaisedButton(
+                                child: Text("0.2"),
+                                onPressed: () {
+                                    if (_player != null) {
+                                        _player.setVolume(0.2);
+                                    }
+                                }),
+                        RaisedButton(
+                                child: Text("0.5"),
+                                onPressed: () {
+                                    if (_player != null) {
+                                        _player.setVolume(0.5);
+                                    }
+                                }),
+                        RaisedButton(
+                                child: Text("1.0"),
+                                onPressed: () {
+                                    if (_player != null) {
+                                        _player.setVolume(1.0);
+                                    }
+                                }),
+                        ])
           ],
         ),
       ),
