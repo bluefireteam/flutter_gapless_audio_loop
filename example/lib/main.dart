@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
                 child: Text("Play"),
                 onPressed: () async {
-                  final player = _player ?? GaplessAudioLoop();
+                  final player = GaplessAudioLoop();
                   await player.load('Loop-Menu.wav');
 
                   await player.play();
