@@ -25,7 +25,8 @@ public class SwiftGaplessAudioLoopPlugin: NSObject, FlutterPlugin {
             }
             
             if let myArgs = args as? [String: Any],
-                let url: String = myArgs["url"] as? String {
+                let url: String = myArgs["url"] as? String,
+                let volume: Double = myArgs["volume"] as? Double {
                 
                 // Get url
                 let asset = AVAsset(url: URL(fileURLWithPath: url ))
@@ -35,6 +36,8 @@ public class SwiftGaplessAudioLoopPlugin: NSObject, FlutterPlugin {
                 let playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
                 
                 player.play()
+                
+                player.volume = Float(volume)
                 
                 let id = SwiftGaplessAudioLoopPlugin.id
                 SwiftGaplessAudioLoopPlugin.players[id] = Player(player: player, playerLooper: playerLooper)
@@ -56,6 +59,18 @@ public class SwiftGaplessAudioLoopPlugin: NSObject, FlutterPlugin {
                 if (call.method == "stop") {
                     SwiftGaplessAudioLoopPlugin.players[playerId] = nil
                 }
+            }
+        } else if (call.method == "setVolume") {
+            guard let args = call.arguments else {
+                return;
+            }
+            
+            if let myArgs = args as? [String: Any],
+                let playerId: Int = myArgs["playerId"] as? Int,
+                let volume: Double = myArgs["volume"] as? Double {
+                
+                let player = SwiftGaplessAudioLoopPlugin.players[playerId]
+                player?.player?.volume = Float(volume)
             }
         } else if (call.method == "resume") {
             guard let args = call.arguments else {
