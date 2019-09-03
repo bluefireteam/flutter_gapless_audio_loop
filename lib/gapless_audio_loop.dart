@@ -48,12 +48,10 @@ class GaplessAudioLoop {
   Future<void> play() async {
     assert(_loadedFile != null, 'File is not loaded');
 
-    // Handle when this is called when already playing.
-    if (_id != null) {
-        await stop();
+    // Do nothing when it  is already playing
+    if (_id == null) {
+        _id = await _channel.invokeMethod("play", {'url': _loadedFile.path, 'volume': _volume});
     }
-
-    _id = await _channel.invokeMethod("play", {'url': _loadedFile.path, 'volume': _volume});
   }
 
   Future<void> pause() async {
