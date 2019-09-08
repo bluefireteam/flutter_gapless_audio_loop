@@ -14,7 +14,7 @@ If you need a more full-featured audio player, I suggest that you take a look on
 
 Drop it on your pubspec.yaml
 ```yaml
-gapless_audio_loop: ^0.0.1
+gapless_audio_loop: ^1.0.0
 ```
 
 Import it:
@@ -32,8 +32,18 @@ await player.play();
 
 To stop the loop just call `await player.stop()`
 
+You can also pause and resume using the `pause` and `resume` methods.
+
+## Volume
+
+Audio volume can be changed using the the `setVolume` method, which receives a double between 0 and 1, which represents the percentage of the total volume of the device, example, if you pass `0.5` it means that the audio will play on 50% of the total volume.
+
+## Seek
+
+Seeking can be done by the `seek` method, which receives a `Duration` object, beware that since this is a looping library, if you call seek to a value bigger than the total duration of the file, unexpected behaviour may occur, so it is highly recommend to avoid that and only use durations that are inside the total length of the file.
 
 ## Troubleshooting
+
 
 These are some know reasons for audio files not looping perfect:
 
