@@ -17,11 +17,12 @@ class GaplessAudioLoop {
   double get volume => _volume;
 
   void setVolume(double volume) async {
-      _volume = volume;
+    _volume = volume;
 
-      if (_id != null) {
-          await _channel.invokeMethod("setVolume", { 'playerId': _id, "volume": _volume });
-      }
+    if (_id != null) {
+      await _channel
+          .invokeMethod("setVolume", {'playerId': _id, "volume": _volume});
+    }
   }
 
   Future<ByteData> _fetchAsset(String fileName) async {
@@ -50,14 +51,15 @@ class GaplessAudioLoop {
 
     // Do nothing when it  is already playing
     if (_id == null) {
-        _id = await _channel.invokeMethod("play", {'url': _loadedFile.path, 'volume': _volume});
+      _id = await _channel
+          .invokeMethod("play", {'url': _loadedFile.path, 'volume': _volume});
     }
   }
 
   Future<void> pause() async {
     assert(_id != null, 'Loop is not playing');
 
-    await _channel.invokeMethod("pause", {'playerId': _id });
+    await _channel.invokeMethod("pause", {'playerId': _id});
   }
 
   Future<void> resume() async {
@@ -78,6 +80,7 @@ class GaplessAudioLoop {
     assert(_loadedFile != null, 'File is not loaded');
     assert(_id != null, 'Loop is not playing');
 
-    await _channel.invokeMethod("seek", {'playerId': _id, "position": duration.inMilliseconds });
+    await _channel.invokeMethod(
+        "seek", {'playerId': _id, "position": duration.inMilliseconds});
   }
 }
