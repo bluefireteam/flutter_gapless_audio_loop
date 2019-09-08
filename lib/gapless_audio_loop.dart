@@ -73,4 +73,11 @@ class GaplessAudioLoop {
 
     await _channel.invokeMethod("stop", {'playerId': _id});
   }
+
+  Future<void> seek(Duration duration) async {
+    assert(_loadedFile != null, 'File is not loaded');
+    assert(_id != null, 'Loop is not playing');
+
+    await _channel.invokeMethod("seek", {'playerId': _id, "position": duration.inMilliseconds });
+  }
 }

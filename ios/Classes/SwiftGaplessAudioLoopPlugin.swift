@@ -83,6 +83,18 @@ public class SwiftGaplessAudioLoopPlugin: NSObject, FlutterPlugin {
                 let player = SwiftGaplessAudioLoopPlugin.players[playerId]
                 player?.player?.play()
             }
+        } else if (call.method == "seek") {
+                guard let args = call.arguments else {
+                    return;
+                }
+                
+                if let myArgs = args as? [String: Any],
+                    let playerId: Int = myArgs["playerId"] as? Int,
+                    let positionInMillis: Int = myArgs["position"] as? Int {
+                    
+                    let player = SwiftGaplessAudioLoopPlugin.players[playerId]
+                    player?.player?.seek(to: CMTimeMakeWithSeconds(Float64(positionInMillis / 1000), Int32(NSEC_PER_SEC)))
+                }
         }
     }
 }

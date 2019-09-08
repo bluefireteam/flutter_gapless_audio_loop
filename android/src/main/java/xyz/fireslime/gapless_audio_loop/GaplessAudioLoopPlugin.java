@@ -93,6 +93,10 @@ class GaplessPlayer {
     public void resume() {
         currentPlayer.start();
     }
+
+    public void seek(int position) {
+        currentPlayer.seekTo(position);
+    }
 }
 
 /**
@@ -155,6 +159,11 @@ public class GaplessAudioLoopPlugin implements MethodCallHandler {
             if (player != null) {
                 player.setVolume(volume);
             }
+        } else if (call.method.equals("seek")) {
+            GaplessPlayer player = getPlayer(call);
+            int position = call.argument("position");
+
+            player.seek(position);
         } else {
             result.notImplemented();
         }

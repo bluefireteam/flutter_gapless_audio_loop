@@ -72,6 +72,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     _player.resume();
                   }
                 }),
+            RaisedButton(
+                child: Text("Seek to 5 secs"),
+                onPressed: () {
+                  if (_player != null) {
+                    _player.seek(Duration(seconds: 5));
+                  }
+                }),
             Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
