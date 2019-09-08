@@ -1,6 +1,6 @@
 name: gapless_audio_loop
-description: A new flutter plugin project.
-version: 0.0.1
+description: A plugin specialized on playing audio files on a gapless loop
+version: 1.0.0
 author: Erick Zanardo <erick@fireslime.xyz>
 homepage: https://github.com/fireslime/flutter_gapless_audio_loop
 
