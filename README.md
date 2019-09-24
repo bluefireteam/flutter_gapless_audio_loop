@@ -14,7 +14,7 @@ If you need a more full-featured audio player, I suggest that you take a look on
 
 Drop it on your pubspec.yaml
 ```yaml
-gapless_audio_loop: ^1.0.0
+gapless_audio_loop: ^1.1.0
 ```
 
 Import it:
@@ -25,7 +25,7 @@ import 'package:gapless_audio_loop/gapless_audio_loop.dart';
 Loading and starting the loop:
 ```dart
 final player = GaplessAudioLoop();
-await player.load('Loop-Menu.wav');
+await player.loadAsset('Loop-Menu.wav'); // use loadFile instead to use a file from the device storage
 
 await player.play();
 ```
