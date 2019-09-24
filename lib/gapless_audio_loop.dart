@@ -10,7 +10,7 @@ class GaplessAudioLoop {
       const MethodChannel('gapless_audio_loop');
 
   /// A reference to the loaded file.
-  File _loadedFile;
+  String _loadedFile;
   int _id;
   double _volume = 1.0;
 
@@ -38,12 +38,17 @@ class GaplessAudioLoop {
 
   /// Load the [fileName] for playing
   ///
-  Future<void> load(String fileName) async {
+  Future<void> loadAsset(String fileName) async {
     if (_loadedFile != null) {
       return _loadedFile;
     }
 
-    _loadedFile = await _fetchToMemory(fileName);
+    final result = await _fetchToMemory(fileName);
+    _loadedFile = result.path;
+  }
+
+  void loadFile(String path) {
+    _loadedFile = path;
   }
 
   Future<void> play() async {
@@ -52,7 +57,7 @@ class GaplessAudioLoop {
     // Do nothing when it  is already playing
     if (_id == null) {
       _id = await _channel
-          .invokeMethod("play", {'url': _loadedFile.path, 'volume': _volume});
+          .invokeMethod("play", {'url': _loadedFile, 'volume': _volume});
     }
   }
 

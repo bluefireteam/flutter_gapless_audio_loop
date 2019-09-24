@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart';
 
 import 'package:gapless_audio_loop/gapless_audio_loop.dart';
 
@@ -26,8 +30,24 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+const staticFileUrl = 'https://luan.xyz/files/audio/ambient_c_motion.mp3';
+
 class _MyHomePageState extends State<MyHomePage> {
   GaplessAudioLoop _player;
+  String _localFilePath;
+
+  Future _loadFile() async {
+    final bytes = await readBytes(staticFileUrl);
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/audio.mp3');
+
+    await file.writeAsBytes(bytes);
+    if (await file.exists()) {
+      setState(() {
+        _localFilePath = file.path;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text("Play"),
                 onPressed: () async {
                   final player = GaplessAudioLoop();
-                  await player.load('Loop-Menu.wav');
+                  await player.loadAsset('Loop-Menu.wav');
 
                   await player.play();
 
@@ -102,7 +122,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       _player.setVolume(1.0);
                     }
                   }),
-            ])
+            ]),
+            RaisedButton(
+                child: Text("Download file to Device, and play it"),
+                onPressed: () async {
+                  await _loadFile();
+
+                  final player = GaplessAudioLoop();
+                  player.loadFile(_localFilePath);
+
+                  await player.play();
+
+                  setState(() {
+                    _player = player;
+                  });
+                }),
           ],
         ),
       ),
