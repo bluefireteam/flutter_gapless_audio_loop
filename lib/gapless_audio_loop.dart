@@ -88,4 +88,8 @@ class GaplessAudioLoop {
     await _channel.invokeMethod(
         "seek", {'playerId': _id, "position": duration.inMilliseconds});
   }
+  
+  bool isAssetLoaded() {
+    return _loadedFile != null;
+  }
 }
