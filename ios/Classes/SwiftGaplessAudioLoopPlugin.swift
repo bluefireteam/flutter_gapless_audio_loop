@@ -93,7 +93,7 @@ public class SwiftGaplessAudioLoopPlugin: NSObject, FlutterPlugin {
                     let positionInMillis: Int = myArgs["position"] as? Int {
                     
                     let player = SwiftGaplessAudioLoopPlugin.players[playerId]
-                    player?.player?.seek(to: CMTimeMakeWithSeconds(Float64(positionInMillis / 1000), Int32(NSEC_PER_SEC)))
+                    player?.player?.seek(to: CMTimeMakeWithSeconds(Float64(positionInMillis / 1000), preferredTimescale: Int32(NSEC_PER_SEC)))
                 }
         }
     }
