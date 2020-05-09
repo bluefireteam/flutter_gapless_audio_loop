@@ -1,3 +1,7 @@
+### Deprecated
+
+This package is no longer maintained as this solution does not works well on Android 9 anymore. To get gapless loop plays, use this [library instead](https://github.com/erickzanardo/ocarina)
+
 # Gapless Audio Loop
 
 A flutter plugin to enable gapless loops on Android and iOs.

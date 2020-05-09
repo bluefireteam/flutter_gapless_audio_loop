@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Fix for iOS compilation
+
 ## 1.1.0
 
 - Added support for files not from the asset bundle
